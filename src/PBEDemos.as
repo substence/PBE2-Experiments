@@ -82,63 +82,69 @@ package
          */
         public function PBEDemos()
         {
-            // Set it so that the stage resizes properly.
-            stage.align = StageAlign.TOP_LEFT;
-            stage.scaleMode = StageScaleMode.NO_SCALE;
-            
-            // Set up the root group for the demo and register a few useful
-            // managers. Managers are available via dependency injection to the
-            // demo scenes and objects.
-            rootGroup.initialize();
-            rootGroup.name = "PBEDemoGroup";
-            rootGroup.registerManager(Stage, stage);
-            rootGroup.registerManager(PropertyManager, new PropertyManager());
-            rootGroup.registerManager(ConsoleCommandManager, new ConsoleCommandManager());
-            rootGroup.registerManager(TimeManager, new TimeManager());
-            rootGroup.registerManager(KeyboardManager, new KeyboardManager());
-            rootGroup.registerManager(Console, new Console());
-            
-            // Listen for keyboard events.
-            stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
-            
-            // Detect when the app gains or loses focus; we will display a 
-            // pause caption in this case and pause the TimeManager.
-            stage.addEventListener(Event.DEACTIVATE, onDeactivate);
-            stage.addEventListener(Event.ACTIVATE, onActivate);
-
-            // Set up the scene caption.
-            sceneCaption.autoSize = TextFieldAutoSize.LEFT;
-            sceneCaption.text = "Loading..";
-            sceneCaption.mouseEnabled = false;
-            sceneCaption.textColor = 0x0;
-            sceneCaption.defaultTextFormat = new TextFormat(null, 48, 0x0, true);
-            addChild(sceneCaption);
-            
-            // Set up the usage caption.
-            usageCaption.autoSize = TextFieldAutoSize.CENTER;
-            usageCaption.y = stage.stageHeight - 32;
-            usageCaption.x = 0;
-            usageCaption.mouseEnabled = false;
-            usageCaption.width = stage.stageWidth;
-            usageCaption.defaultTextFormat = new TextFormat(null, 24, 0x0, true);
-            usageCaption.text = "~ for console, < for previous demo, > for next demo.";
-            usageCaption.textColor = 0x0;
-            addChild(usageCaption);
-            
-            // Set up the paused caption.
-            pauseCaption.autoSize = TextFieldAutoSize.CENTER;
-            pauseCaption.y = stage.stageHeight/2 - 64;
-            pauseCaption.x = 0;
-            pauseCaption.mouseEnabled = false;
-            pauseCaption.width = stage.stageWidth;
-            pauseCaption.defaultTextFormat = new TextFormat(null, 48, 0xFF0000, true);
-            pauseCaption.text = "Paused!";
-            pauseCaption.textColor = 0x0;
-            addChild(pauseCaption);
-            
-            // Make sure first scene is loaded.
-            updateScene();
+			addEventListener(Event.ADDED_TO_STAGE, addedToStage);
         }
+		
+		private function addedToStage(event:Event):void
+		{
+			removeEventListener(Event.ADDED_TO_STAGE, addedToStage);
+			// Set it so that the stage resizes properly.
+			stage.align = StageAlign.TOP_LEFT;
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+			
+			// Set up the root group for the demo and register a few useful
+			// managers. Managers are available via dependency injection to the
+			// demo scenes and objects.
+			rootGroup.initialize();
+			rootGroup.name = "PBEDemoGroup";
+			rootGroup.registerManager(Stage, stage);
+			rootGroup.registerManager(PropertyManager, new PropertyManager());
+			rootGroup.registerManager(ConsoleCommandManager, new ConsoleCommandManager());
+			rootGroup.registerManager(TimeManager, new TimeManager());
+			rootGroup.registerManager(KeyboardManager, new KeyboardManager());
+			rootGroup.registerManager(Console, new Console());
+			
+			// Listen for keyboard events.
+			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+			
+			// Detect when the app gains or loses focus; we will display a 
+			// pause caption in this case and pause the TimeManager.
+			stage.addEventListener(Event.DEACTIVATE, onDeactivate);
+			stage.addEventListener(Event.ACTIVATE, onActivate);
+			
+			// Set up the scene caption.
+			sceneCaption.autoSize = TextFieldAutoSize.LEFT;
+			sceneCaption.text = "Loading..";
+			sceneCaption.mouseEnabled = false;
+			sceneCaption.textColor = 0x0;
+			sceneCaption.defaultTextFormat = new TextFormat(null, 48, 0x0, true);
+			addChild(sceneCaption);
+			
+			// Set up the usage caption.
+			usageCaption.autoSize = TextFieldAutoSize.CENTER;
+			usageCaption.y = stage.stageHeight - 32;
+			usageCaption.x = 0;
+			usageCaption.mouseEnabled = false;
+			usageCaption.width = stage.stageWidth;
+			usageCaption.defaultTextFormat = new TextFormat(null, 24, 0x0, true);
+			usageCaption.text = "~ for console, < for previous demo, > for next demo.";
+			usageCaption.textColor = 0x0;
+			addChild(usageCaption);
+			
+			// Set up the paused caption.
+			pauseCaption.autoSize = TextFieldAutoSize.CENTER;
+			pauseCaption.y = stage.stageHeight/2 - 64;
+			pauseCaption.x = 0;
+			pauseCaption.mouseEnabled = false;
+			pauseCaption.width = stage.stageWidth;
+			pauseCaption.defaultTextFormat = new TextFormat(null, 48, 0xFF0000, true);
+			pauseCaption.text = "Paused!";
+			pauseCaption.textColor = 0x0;
+			addChild(pauseCaption);
+			
+			// Make sure first scene is loaded.
+			updateScene();
+		}
         
         /**
          * Called when we lose focus; we fade in the pause caption and set
